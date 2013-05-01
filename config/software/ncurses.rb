@@ -5,9 +5,9 @@
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
-# 
+#
 #     http://www.apache.org/licenses/LICENSE-2.0
-# 
+#
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -50,6 +50,7 @@ end
 
 build do
 if platform == "aix"
+  # FIXME: harcoded path nastiness and move to patches directory (and make real diffs and document WTF)
   command "cp -f /opt/chef-build/omnibus-software/config/software/aix-files/mk-1st.awk /var/cache/omnibus/src/ncurses-5.9/"
   command "cp -f /opt/chef-build/omnibus-software/config/software/aix-files/configure /var/cache/omnibus/src/ncurses-5.9/"
 end

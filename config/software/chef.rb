@@ -17,7 +17,10 @@
 
 name "chef"
 
-dependencies ["ruby", "rubygems", "yajl", "bundler"]
+dependency "ruby"
+dependency "rubygems"
+dependency "yajl"
+dependency "bundler"
 
 version ENV["CHEF_GIT_REV"] || "master"
 
@@ -46,6 +49,7 @@ env =
     end
   when "aix"
   {
+      # FIXME: where is the -R option???
       "CFLAGS" => "-L#{install_dir}/embedded/lib -I#{install_dir}/embedded/include",
       "LDFLAGS" => "-L#{install_dir}/embedded/lib -I#{install_dir}/embedded/include"
   }

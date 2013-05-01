@@ -56,6 +56,7 @@ env =
     end
   when "aix"
     {
+      # FIXME: this cannot possibly work?  There's no -R flag so we'll pull in libraries from system.  Does the health-check actually work???
       #"CFLAGS" => "-I#{install_dir}/embedded/include",
       #"LDFLAGS" => "-L#{install_dir}/embedded/lib -lz"
       "LDFLAGS" => "-lz"
