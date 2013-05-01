@@ -54,6 +54,12 @@ env =
     else
       raise "Sorry, #{Omnibus.config.solaris_compiler} is not a valid compiler selection."
     end
+  when "aix"
+    {
+      #"CFLAGS" => "-I#{install_dir}/embedded/include",
+      #"LDFLAGS" => "-L#{install_dir}/embedded/lib -lz"
+      "LDFLAGS" => "-lz"
+    }
   else
     {
       "CFLAGS" => "-I#{install_dir}/embedded/include -O3 -g -pipe",

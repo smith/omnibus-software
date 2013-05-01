@@ -18,8 +18,7 @@
 name "openssl"
 version "1.0.1c"
 
-dependency "zlib"
-dependency "cacerts"
+dependencies ["zlib", "cacerts"]
 
 source :url => "http://www.openssl.org/source/openssl-1.0.1c.tar.gz",
        :md5 => "ae412727c8c15b67880aef7bd2999b2e"
@@ -33,6 +32,11 @@ build do
             "CFLAGS" => "-arch x86_64 -m64 -L#{install_dir}/embedded/lib -I#{install_dir}/embedded/include -I#{install_dir}/embedded/include/ncurses",
             "LDFLAGS" => "-arch x86_64 -R#{install_dir}/embedded/lib -L#{install_dir}/embedded/lib -I#{install_dir}/embedded/include -I#{install_dir}/embedded/include/ncurses"
           }
+        when "aix" 
+        {
+            "CFLAGS" => "-I#{install_dir}/embedded/include",
+            "LDFLAGS" => "-R#{install_dir}/embedded/lib -L#{install_dir}/embedded/lib"
+        }
         when "solaris2"
           if Omnibus.config.solaris_compiler == "studio"
             {
@@ -56,6 +60,15 @@ build do
         end
 
   configure_command = case platform
+                      when "aix"
+                        ["./Configure",
+                         "aix-cc",
+                         "--prefix=#{install_dir}/embedded",
+                        "--with-zlib-lib=#{install_dir}/embedded/lib",
+                        "--with-zlib-include=#{install_dir}/embedded/include",
+                        "no-rc5",
+                        "zlib",
+                        "shared"].join(" ")
                       when "mac_os_x"
                         ["./Configure",
                          "darwin64-x86_64-cc",

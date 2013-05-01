@@ -5,9 +5,9 @@
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
-#
+# 
 #     http://www.apache.org/licenses/LICENSE-2.0
-#
+# 
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,9 +18,15 @@
 name "yajl"
 gem_version = "1.1.0"
 
-dependency "rubygems"
+dependencies ["rubygems"]
 
 relative_path "yajl-ruby"
+
+if platform == "aix"
+  gsource = "/opt/chef-build/omnibus-software/config/software/aix-files/yajl-ruby-1.1.0.gem"
+else
+  gsource = "yajl-ruby"
+end
 
 if (platform == "solaris2" and Omnibus.config.solaris_compiler == "studio")
   version "sparc"
@@ -35,7 +41,7 @@ if (platform == "solaris2" and Omnibus.config.solaris_compiler == "studio")
 else
   version "1.1.0"
   build do
-    gem ["install yajl-ruby",
+    gem ["install #{gsource}",
          "-v #{gem_version}",
          "-n #{install_dir}/bin",
          "--no-rdoc --no-ri"].join(" ")
